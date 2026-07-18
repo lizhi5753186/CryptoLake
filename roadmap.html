@@ -181,6 +181,61 @@
   .callout { background: var(--accent-bg); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); border-radius: var(--r); padding: 16px 20px; font-size: 14.5px; color: var(--ink-soft); }
   .callout strong { color: var(--accent-ink); }
 
+  /* ---------- 结果产物效果图 mockups ---------- */
+  .deliv { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+  .deliv-cap { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 10px; }
+  .mock { display: flex; gap: 12px; flex-wrap: wrap; }
+  .win { flex: 1 1 250px; min-width: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface-2); }
+  .win-bar { display: flex; align-items: center; gap: 7px; padding: 6px 10px; background: var(--surface); border-bottom: 1px solid var(--line-soft); font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); }
+  .win-bar .dots { display: flex; gap: 4px; }
+  .win-bar .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); display: block; }
+  .win-body { padding: 12px; }
+  .win-body svg { display: block; width: 100%; height: auto; }
+  /* mini table */
+  .mtbl { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 10px; }
+  .mtbl th { text-align: left; color: var(--ink-faint); font-weight: 600; padding: 2px 6px; border-bottom: 1px solid var(--line-soft); }
+  .mtbl td { padding: 2px 6px; color: var(--ink-soft); border-bottom: 1px solid var(--line-soft); }
+  .mtbl tr:last-child td { border-bottom: 0; }
+  .mtbl td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  /* funnel */
+  .frow { display: flex; align-items: center; gap: 8px; margin: 5px 0; font-family: var(--mono); font-size: 10px; color: var(--ink-soft); }
+  .frow .fbar { height: 15px; background: var(--bull); border-radius: 2px; }
+  .frow .flab { width: 52px; text-align: right; color: var(--ink-faint); flex-shrink: 0; }
+  /* layer flow */
+  .flow { display: flex; align-items: center; gap: 4px; }
+  .flow .lyr { flex: 1; text-align: center; font-family: var(--mono); font-size: 9px; padding: 7px 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 3px; color: var(--ink-soft); }
+  .flow .arw { color: var(--accent); font-size: 11px; flex-shrink: 0; }
+  /* dag nodes */
+  .dag { display: flex; align-items: center; gap: 3px; flex-wrap: wrap; }
+  .dag .node { font-family: var(--mono); font-size: 8.5px; padding: 4px 6px; border-radius: 10px; background: var(--accent-bg); color: var(--accent-ink); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); white-space: nowrap; }
+  .dag .arw { color: var(--ink-faint); font-size: 9px; }
+  /* kpi tiles */
+  .kpis { display: flex; gap: 6px; margin-bottom: 8px; }
+  .kpi { flex: 1; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; padding: 6px 7px; }
+  .kpi .n { font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink); }
+  .kpi .n small { color: var(--accent); font-size: 8px; }
+  .kpi .l { font-size: 8px; color: var(--ink-faint); }
+  .minibars { display: flex; align-items: flex-end; gap: 5px; height: 42px; }
+  .minibars span { flex: 1; background: var(--accent); border-radius: 2px 2px 0 0; }
+  /* feature importance */
+  .fi { display: flex; align-items: center; gap: 6px; margin: 4px 0; font-family: var(--mono); font-size: 9px; color: var(--ink-soft); }
+  .fi .k { width: 62px; flex-shrink: 0; text-align: right; color: var(--ink-faint); }
+  .fi .b { height: 9px; background: var(--bull); border-radius: 2px; }
+  /* resume thumb */
+  .rez { font-family: var(--sans); }
+  .rez .rn { font-weight: 800; font-size: 12px; color: var(--ink); }
+  .rez .rr { font-family: var(--mono); font-size: 7.5px; letter-spacing: .1em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+  .rez .rh { font-family: var(--mono); font-size: 8px; color: var(--accent-ink); border-bottom: 1px solid var(--accent); padding-bottom: 2px; margin: 7px 0 4px; text-transform: uppercase; letter-spacing: .08em; }
+  .rez .ln { height: 4px; background: var(--line); border-radius: 2px; margin: 3px 0; }
+  .rez .ln.s { width: 60%; } .rez .ln.m { width: 82%; }
+  /* github card */
+  .ghc { font-family: var(--sans); }
+  .ghc .repo { font-family: var(--mono); font-size: 11px; color: var(--accent-ink); font-weight: 600; }
+  .ghc .desc { font-size: 9.5px; color: var(--ink-soft); margin: 6px 0 10px; }
+  .ghc .meta { display: flex; gap: 12px; font-size: 9px; color: var(--ink-faint); font-family: var(--mono); align-items: center; }
+  .ghc .lang { display: inline-flex; align-items: center; gap: 4px; }
+  .ghc .lang i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: block; }
+
   footer { padding: 46px 0 70px; border-top: 1px solid var(--line-soft); color: var(--ink-faint); font-size: 13.5px; }
   a { color: var(--accent-ink); }
   ::selection { background: var(--accent-bg); }
@@ -280,7 +335,7 @@
   <!-- 2 阶段路线 -->
   <section>
     <div class="sec-head"><span class="idx">02</span><h2>18 个月 · 六个阶段</h2></div>
-    <p class="sec-sub">按大三学生的现实节奏设计:平时每周 8–12 小时,寒暑假冲刺。每个阶段结束都有一个能拿出手的交付物——不是"学完了",而是"做出来了"。</p>
+    <p class="sec-sub">按大三学生的现实节奏设计:平时每周 8–12 小时,寒暑假冲刺。每个阶段结束都有一个能拿出手的交付物——不是"学完了",而是"做出来了"。<strong>每个阶段下方都配了「结果产物 · 效果图」</strong>,照着对照就知道目标长什么样。</p>
 
     <div class="phase">
       <div class="phase-hd"><span class="code">P1</span><span class="mo">M01–M03</span><span class="ttl">SQL 与数据建模地基</span><span class="spacer"></span><span class="tag g">交付:数仓 + 50 条业务查询</span></div>
@@ -289,6 +344,49 @@
         <div class="prow"><div class="k">项目里做</div><div class="v">建好 8 张表的星型模型,用 Python 造 10 万级数据,写 50+ 基础业务查询(日活、成交额、Top 币种)</div></div>
         <div class="prow"><div class="k">交付物</div><div class="v"><strong>建表脚本 + 造数脚本 + 一份 SQL 查询集</strong>,全部上传 GitHub</div></div>
         <div class="prow"><div class="k">资源</div><div class="v">《SQL必知必会》· LeetCode Database · 牛客 SQL 篇</div></div>
+        <div class="deliv">
+          <div class="deliv-cap">📦 结果产物 · 效果图</div>
+          <div class="mock">
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> 01_schema.sql · 星型模型</div>
+              <div class="win-body">
+                <svg viewBox="0 0 250 150" role="img" aria-label="星型模型示意">
+                  <g font-family="ui-monospace,monospace" font-size="8">
+                    <line x1="125" y1="75" x2="45"  y2="28"  stroke="var(--line)" stroke-width="1"/>
+                    <line x1="125" y1="75" x2="205" y2="28"  stroke="var(--line)" stroke-width="1"/>
+                    <line x1="125" y1="75" x2="45"  y2="122" stroke="var(--line)" stroke-width="1"/>
+                    <line x1="125" y1="75" x2="205" y2="122" stroke="var(--line)" stroke-width="1"/>
+                    <rect x="88" y="61" width="74" height="28" rx="4" fill="var(--accent-bg)" stroke="var(--accent)"/>
+                    <text x="125" y="78" text-anchor="middle" fill="var(--accent-ink)" font-weight="bold">fact_trade</text>
+                    <rect x="10"  y="16" width="70" height="24" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+                    <text x="45"  y="31" text-anchor="middle" fill="var(--ink-soft)">dim_user</text>
+                    <rect x="170" y="16" width="72" height="24" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+                    <text x="206" y="31" text-anchor="middle" fill="var(--ink-soft)">dim_asset</text>
+                    <rect x="10"  y="110" width="70" height="24" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+                    <text x="45"  y="125" text-anchor="middle" fill="var(--ink-soft)">dim_date</text>
+                    <rect x="170" y="110" width="72" height="24" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+                    <text x="206" y="125" text-anchor="middle" fill="var(--ink-soft)">fact_login</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> generate_data.py → fact_trade</div>
+              <div class="win-body">
+                <table class="mtbl">
+                  <thead><tr><th>user</th><th>symbol</th><th class="num">amount</th><th class="num">fee</th></tr></thead>
+                  <tbody>
+                    <tr><td>1042</td><td>BTC/USDT</td><td class="num">8,412.30</td><td class="num">8.41</td></tr>
+                    <tr><td>0317</td><td>ETH/USDT</td><td class="num">1,205.77</td><td class="num">1.08</td></tr>
+                    <tr><td>2890</td><td>SOL/USDT</td><td class="num">342.10</td><td class="num">0.34</td></tr>
+                    <tr><td>1042</td><td>BTC/USDT</td><td class="num">15,900.00</td><td class="num">4.77</td></tr>
+                    <tr><td>0688</td><td>DOGE/USDT</td><td class="num">96.40</td><td class="num">0.10</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -299,6 +397,37 @@
         <div class="prow"><div class="k">项目里做</div><div class="v">回答第 01 节里那 5 个业务问题;每个结论配一段 SQL + 一句业务解读</div></div>
         <div class="prow"><div class="k">交付物</div><div class="v"><strong>《CryptoLake 用户与营收分析报告 v1》</strong>(Markdown/PDF),这是简历项目的雏形</div></div>
         <div class="prow"><div class="k">资源</div><div class="v">《精益数据分析》· 增长黑客 AARRR 模型 · 各大厂数据分析案例</div></div>
+        <div class="deliv">
+          <div class="deliv-cap">📦 结果产物 · 效果图</div>
+          <div class="mock">
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> AARRR 漏斗</div>
+              <div class="win-body">
+                <div class="frow"><span class="flab">注册</span><span class="fbar" style="width:100%;background:var(--ink-faint)"></span><span>100%</span></div>
+                <div class="frow"><span class="flab">入金</span><span class="fbar" style="width:71%"></span><span>71%</span></div>
+                <div class="frow"><span class="flab">首笔交易</span><span class="fbar" style="width:48%;background:var(--accent)"></span><span>48%</span></div>
+                <div class="frow"><span class="flab">复购</span><span class="fbar" style="width:33%"></span><span>33%</span></div>
+                <div style="font-size:9px;color:var(--ink-faint);margin-top:6px;font-family:var(--mono)">↑ 入金→首单跌幅最大 = 抓手</div>
+              </div>
+            </div>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> RFM 分层 · 手续费贡献</div>
+              <div class="win-body">
+                <table class="mtbl">
+                  <thead><tr><th>分层</th><th class="num">人数</th><th class="num">手续费占比</th></tr></thead>
+                  <tbody>
+                    <tr><td>核心鲸鱼</td><td class="num">312</td><td class="num">61.4%</td></tr>
+                    <tr><td>普通活跃</td><td class="num">1,880</td><td class="num">24.7%</td></tr>
+                    <tr><td>高价值流失预警</td><td class="num">205</td><td class="num">9.1%</td></tr>
+                    <tr><td>新客/潜力</td><td class="num">1,140</td><td class="num">3.8%</td></tr>
+                    <tr><td>一般流失</td><td class="num">1,463</td><td class="num">1.0%</td></tr>
+                  </tbody>
+                </table>
+                <div style="font-size:9px;color:var(--ink-faint);margin-top:6px;font-family:var(--mono)">↑ 6% 用户贡献 61% 手续费(二八法则)</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -309,6 +438,43 @@
         <div class="prow"><div class="k">项目里做</div><div class="v">用 Python 复现并深化 P2 的分析;做一个 A/B 测试模拟(如"新手礼包是否提升 7 日留存",算 p 值与置信区间)</div></div>
         <div class="prow"><div class="k">交付物</div><div class="v"><strong>一套 Jupyter Notebook</strong>,图文并茂,能直接演示给面试官</div></div>
         <div class="prow"><div class="k">资源</div><div class="v">《利用Python进行数据分析》(pandas作者著)· Kaggle Learn · StatQuest(统计入门神器)</div></div>
+        <div class="deliv">
+          <div class="deliv-cap">📦 结果产物 · 效果图</div>
+          <div class="mock">
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> report.ipynb · 留存曲线 [Out]</div>
+              <div class="win-body">
+                <svg viewBox="0 0 240 90" role="img" aria-label="留存曲线">
+                  <line x1="20" y1="8" x2="20" y2="72" stroke="var(--line)" stroke-width="1"/>
+                  <line x1="20" y1="72" x2="232" y2="72" stroke="var(--line)" stroke-width="1"/>
+                  <polyline fill="none" stroke="var(--accent)" stroke-width="2"
+                    points="20,12 55,34 90,50 125,58 160,62 195,63 230,64"/>
+                  <g fill="var(--accent)">
+                    <circle cx="20" cy="12" r="2.5"/><circle cx="55" cy="34" r="2.5"/>
+                    <circle cx="90" cy="50" r="2.5"/><circle cx="125" cy="58" r="2.5"/>
+                    <circle cx="160" cy="62" r="2.5"/><circle cx="195" cy="63" r="2.5"/><circle cx="230" cy="64" r="2.5"/>
+                  </g>
+                  <text x="125" y="86" text-anchor="middle" font-family="ui-monospace,monospace" font-size="7" fill="var(--ink-faint)">Day 0 → 14 · 7日留存 ≈ 26%</text>
+                </svg>
+              </div>
+            </div>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> A/B 测试 · 7日留存 [Out]</div>
+              <div class="win-body">
+                <svg viewBox="0 0 240 90" role="img" aria-label="AB 测试">
+                  <line x1="20" y1="72" x2="232" y2="72" stroke="var(--line)" stroke-width="1"/>
+                  <rect x="55"  y="40" width="50" height="32" fill="var(--ink-faint)"/>
+                  <rect x="140" y="26" width="50" height="46" fill="var(--bull)"/>
+                  <text x="80"  y="36" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="var(--ink-soft)">24.1%</text>
+                  <text x="165" y="22" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="var(--bull)">28.7%</text>
+                  <text x="80"  y="84" text-anchor="middle" font-family="ui-monospace,monospace" font-size="7" fill="var(--ink-faint)">A 对照</text>
+                  <text x="165" y="84" text-anchor="middle" font-family="ui-monospace,monospace" font-size="7" fill="var(--ink-faint)">B 实验</text>
+                </svg>
+                <div style="font-size:9px;color:var(--bull);margin-top:2px;font-family:var(--mono);text-align:center">+4.6pp · p=0.012 显著 ✔</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -319,6 +485,36 @@
         <div class="prow"><div class="k">项目里做</div><div class="v">把数据量放大到千万级;用分层思想重构模型;搭一条"造数→清洗→聚合→出报表"的自动化管道</div></div>
         <div class="prow"><div class="k">交付物</div><div class="v"><strong>一条可运行的数据管道 + 数仓分层文档</strong>,这是拉开与普通候选人差距的关键</div></div>
         <div class="prow"><div class="k">资源</div><div class="v">《大数据之路:阿里巴巴大数据实践》· dbt 官方教程 · Spark 官方文档(用 Context7 拉最新版)</div></div>
+        <div class="deliv">
+          <div class="deliv-cap">📦 结果产物 · 效果图</div>
+          <div class="mock">
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> dbt run · 数仓分层血缘</div>
+              <div class="win-body">
+                <div class="flow">
+                  <span class="lyr">ODS<br>贴源</span><span class="arw">→</span>
+                  <span class="lyr">DWD<br>明细</span><span class="arw">→</span>
+                  <span class="lyr">DWS<br>汇总</span><span class="arw">→</span>
+                  <span class="lyr" style="border-color:var(--accent);color:var(--accent-ink)">ADS<br>应用</span>
+                </div>
+                <div style="font-size:9px;color:var(--ink-faint);margin-top:8px;font-family:var(--mono)">dbt test ✔ 5 passed · unique / not_null / range</div>
+              </div>
+            </div>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> Airflow · cryptolake_pipeline</div>
+              <div class="win-body">
+                <div class="dag">
+                  <span class="node">generate</span><span class="arw">→</span>
+                  <span class="node">dbt_run</span><span class="arw">→</span>
+                  <span class="node">dbt_test</span><span class="arw">→</span>
+                  <span class="node">analysis</span><span class="arw">→</span>
+                  <span class="node">model</span>
+                </div>
+                <div style="font-size:9px;color:var(--bull);margin-top:8px;font-family:var(--mono)">● 每日 02:00 自动运行 · success</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -329,6 +525,37 @@
         <div class="prow"><div class="k">项目里做</div><div class="v">给"运营团队"做一个交易平台监控看板;训练一个流失预测模型,评估 AUC 并解释哪些特征重要</div></div>
         <div class="prow"><div class="k">交付物</div><div class="v"><strong>一个可交互看板截图/录屏 + 一个建模 Notebook</strong></div></div>
         <div class="prow"><div class="k">资源</div><div class="v">Tableau Public 免费版 · Apache Superset 官方 · sklearn 官方教程</div></div>
+        <div class="deliv">
+          <div class="deliv-cap">📦 结果产物 · 效果图</div>
+          <div class="mock">
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> Superset · 运营监控看板</div>
+              <div class="win-body">
+                <div class="kpis">
+                  <div class="kpi"><div class="n">$284K<small>▲</small></div><div class="l">手续费收入</div></div>
+                  <div class="kpi"><div class="n">1,205</div><div class="l">DAU</div></div>
+                  <div class="kpi"><div class="n">26%</div><div class="l">7日留存</div></div>
+                </div>
+                <div class="minibars">
+                  <span style="height:100%"></span><span style="height:72%"></span><span style="height:38%"></span>
+                  <span style="height:44%"></span><span style="height:28%"></span><span style="height:20%"></span>
+                </div>
+                <div style="font-size:8px;color:var(--ink-faint);margin-top:4px;font-family:var(--mono)">手续费 by 币种: BTC ETH BNB SOL XRP …</div>
+              </div>
+            </div>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> churn_model.py · 特征重要性</div>
+              <div class="win-body">
+                <div class="fi"><span class="k">active_days</span><span class="b" style="width:74%"></span></div>
+                <div class="fi"><span class="k">trades</span><span class="b" style="width:58%"></span></div>
+                <div class="fi"><span class="k">fee</span><span class="b" style="width:41%"></span></div>
+                <div class="fi"><span class="k">logins</span><span class="b" style="width:30%"></span></div>
+                <div class="fi"><span class="k">deposit_usd</span><span class="b" style="width:19%"></span></div>
+                <div style="font-size:9px;color:var(--accent-ink);margin-top:6px;font-family:var(--mono)">随机森林 · AUC = 0.86</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -339,6 +566,36 @@
         <div class="prow"><div class="k">项目里做</div><div class="v">把整个 CryptoLake 项目做成一个漂亮的 GitHub 仓库 + 一页项目主页(就像这份文档)</div></div>
         <div class="prow"><div class="k">交付物</div><div class="v"><strong>1 份简历 + 1 个作品集仓库 + 投递清单</strong>;开始投实习/校招</div></div>
         <div class="prow"><div class="k">资源</div><div class="v">牛客网面经 · 各厂数据分析真题 · 找学长学姐/在职者内推与模拟面</div></div>
+        <div class="deliv">
+          <div class="deliv-cap">📦 结果产物 · 效果图</div>
+          <div class="mock">
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> resume.pdf</div>
+              <div class="win-body rez">
+                <div class="rn">[ 你的名字 ]</div>
+                <div class="rr">数据分析师 · Data Analyst</div>
+                <div class="rh">项目经历</div>
+                <div style="font-family:var(--mono);font-size:8px;color:var(--ink-soft);margin-bottom:3px">CryptoLake · 交易平台用户与营收分析</div>
+                <div class="ln m"></div><div class="ln"></div><div class="ln s"></div>
+                <div class="rh">专业技能</div>
+                <div class="ln"></div><div class="ln m"></div>
+              </div>
+            </div>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span> github.com</div>
+              <div class="win-body ghc">
+                <div class="repo">📁 lizhi5753186 / CryptoLake</div>
+                <div class="desc">币安式加密交易平台数据仓库与分析 · SQL · Python · Spark · dbt</div>
+                <div class="meta">
+                  <span class="lang"><i></i> Python</span>
+                  <span>★ 12</span>
+                  <span>⑂ 3</span>
+                  <span>MIT</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
