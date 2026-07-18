@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CryptoLake · 加密货币交易平台数据分析报告</title>
+<style>
+:root{--bg:#f4f2ec;--surface:#fbfaf6;--surface2:#efece3;--ink:#1a1f29;--soft:#4b5261;--faint:#8a8f9c;--line:#ded9cd;--accent:#b6791b;--accentink:#8a5a10;--bull:#1c8f79;
+--mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;--sans:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1119;--surface:#141a26;--surface2:#1a2130;--ink:#e7e9ee;--soft:#a3abbb;--faint:#6b7488;--line:#232c3d;--accent:#e8b341;--accentink:#f0c869;--bull:#2bb596;}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px}
+.banner{background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);border-radius:8px;padding:14px 18px;margin-bottom:28px;font-size:14px;color:var(--soft)}
+.banner b{color:var(--accentink)}
+h1{font-size:30px;letter-spacing:-.02em;margin:30px 0 12px}h2{font-size:23px;margin:34px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--accent)}h3{font-size:18px;margin:22px 0 8px}
+p{color:var(--soft)}a{color:var(--accentink)}strong{color:var(--ink)}
+code{font-family:var(--mono);font-size:.88em;background:var(--surface2);padding:1px 5px;border-radius:4px;color:var(--accentink)}
+blockquote{margin:12px 0;padding:8px 16px;border-left:3px solid var(--accent);background:var(--surface);color:var(--soft);border-radius:0 6px 6px 0}
+hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+ul,ol{color:var(--soft);padding-left:22px}li{margin:4px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:14px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:7px 11px;text-align:left}th{background:var(--surface2);color:var(--ink);font-family:var(--mono);font-size:12px}td{color:var(--soft)}
+.cell{margin:16px 0}
+.code{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.code .lbl{font-family:var(--mono);font-size:11px;color:var(--faint);padding:6px 12px;border-bottom:1px solid var(--line);background:var(--surface2)}
+.code pre{margin:0;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--ink)}
+.outputs{padding:10px 14px;border:1px solid var(--line);border-top:0;border-radius:0 0 8px 8px;background:var(--bg)}
+.outputs pre{font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;color:var(--soft);margin:4px 0}
+.outputs img{max-width:100%;height:auto;border-radius:4px}
+.outputs .err{color:#cf4b47}
+footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+</style></head><body><div class="wrap">
+<div class="banner">📊 <b>CryptoLake 分析报告</b> · 本页由 <code>scripts/nb_to_html.py</code> 从 Notebook 生成。 当前 Notebook <b>尚未执行</b>,故只展示分析思路与代码;在本地跑通数据库后重新执行并转换,图表会自动嵌入本页。</div>
+<div class="cell"><h1>CryptoLake · 加密交易平台数据分析报告</h1>
+<blockquote><strong>作者</strong>:_(你的名字)_ · <strong>项目</strong>:个人作品集 · <strong>数据</strong>:自建 MySQL 数仓(Python 按真实分布模拟)</blockquote>
+<h2>背景</h2>
+<p>加密交易平台的商业模式很干净:<strong>平台靠交易手续费(fee)赚钱</strong>。</p>
+<p>因此本报告围绕一条主线——*怎么让更多用户、更频繁地、交易更多的量*——回答 6 个业务问题:</p>
+<ol>
+<li>盘子多大?(概览:用户 / GMV / 手续费)</li>
+<li>用户在哪一步流失最多?(AARRR 漏斗)</li>
+<li>新用户留得住吗?(留存 cohort)</li>
+<li>谁是高价值用户?(RFM 分层)</li>
+<li>钱从哪来?(营收按币种 / VIP 拆解)</li>
+<li>哪个渠道最划算?(渠道 ROI)</li>
+</ol>
+<p>最后做一个 <strong>A/B 测试</strong>,用假设检验评估运营策略是否真的有效。</p>
+<hr></div>
+<div class="cell"><h2>0 · 环境与数据连接</h2>
+<p>运行前请确认:已跑 <code>sql/01_schema.sql</code> 建库、<code>datagen/generate_data.py</code> 造数。</p></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+from sqlalchemy import create_engine
+
+# 图表风格(尽量用英文标题避免中文乱码;需中文可解注下一行)
+# plt.rcParams[&#x27;font.sans-serif&#x27;] = [&#x27;PingFang SC&#x27;, &#x27;Microsoft YaHei&#x27;]
+plt.rcParams[&#x27;axes.unicode_minus&#x27;] = False
+plt.rcParams[&#x27;figure.figsize&#x27;] = (9, 4)
+
+DB_URL = &#x27;mysql+pymysql://root:root@127.0.0.1:3306/cryptolake?charset=utf8mb4&#x27;
+engine = create_engine(DB_URL)
+
+def q(sql):
+    &quot;&quot;&quot;跑一段 SQL,返回 DataFrame&quot;&quot;&quot;
+    return pd.read_sql(sql, engine)
+
+print(&#x27;连接就绪 ✔&#x27;)</pre></div></div>
+<div class="cell"><h2>1 · 概览:盘子有多大</h2>
+<p>先摸清总用户、总成交额(GMV)、总手续费收入,建立量级感。</p></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>overview = q(&#x27;&#x27;&#x27;
+SELECT
+    (SELECT COUNT(*) FROM dim_user)                AS total_users,
+    (SELECT COUNT(*) FROM fact_trade)              AS total_trades,
+    ROUND((SELECT SUM(amount) FROM fact_trade),2)  AS total_gmv_usdt,
+    ROUND((SELECT SUM(fee)    FROM fact_trade),2)  AS total_fee_revenue
+&#x27;&#x27;&#x27;)
+overview</pre></div></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre># DAU 趋势
+dau = q(&#x27;SELECT DATE(ts) d, COUNT(DISTINCT user_id) dau FROM fact_trade GROUP BY DATE(ts) ORDER BY d&#x27;)
+dau[&#x27;d&#x27;] = pd.to_datetime(dau[&#x27;d&#x27;])
+ax = dau.plot(x=&#x27;d&#x27;, y=&#x27;dau&#x27;, legend=False, color=&#x27;#e8b341&#x27;)
+ax.fill_between(dau[&#x27;d&#x27;], dau[&#x27;dau&#x27;], color=&#x27;#e8b341&#x27;, alpha=0.12)
+ax.set_title(&#x27;Daily Active Traders (DAU)&#x27;); ax.set_ylabel(&#x27;DAU&#x27;)
+plt.tight_layout(); plt.show()
+print(f&quot;DAU 均值 {dau[&#x27;dau&#x27;].mean():.0f},峰值 {dau[&#x27;dau&#x27;].max()}&quot;)</pre></div></div>
+<div class="cell"><p><strong>📌 解读</strong>:DAU 反映平台日常活跃盘。若曲线随注册累积上行,说明留存在支撑增长;若平台期或下滑,需结合留存与渠道进一步定位。_(跑完把你看到的趋势写在这里)_</p></div>
+<div class="cell"><h2>2 · AARRR 漏斗:哪一步流失最多</h2>
+<p>注册 → 入金 → 首笔交易 → 复购。<strong>转化率最低的那一步,就是运营该优先优化的地方。</strong></p></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>funnel = q(&#x27;&#x27;&#x27;
+WITH f AS (
+    SELECT u.user_id,
+           MAX(CASE WHEN dw.direction=&#x27;DEPOSIT&#x27; THEN 1 ELSE 0 END) AS has_deposit,
+           MAX(CASE WHEN t.trade_id IS NOT NULL THEN 1 ELSE 0 END) AS has_trade,
+           COUNT(DISTINCT t.trade_id) AS trade_cnt
+    FROM dim_user u
+    LEFT JOIN fact_deposit_withdraw dw ON dw.user_id=u.user_id
+    LEFT JOIN fact_trade t             ON t.user_id =u.user_id
+    GROUP BY u.user_id)
+SELECT COUNT(*) registered, SUM(has_deposit) deposited, SUM(has_trade) traded,
+       SUM(CASE WHEN trade_cnt&gt;=2 THEN 1 ELSE 0 END) repeat_traded
+FROM f&#x27;&#x27;&#x27;)
+
+steps = [&#x27;注册&#x27;,&#x27;入金&#x27;,&#x27;首笔交易&#x27;,&#x27;复购&#x27;]
+vals = funnel.iloc[0][[&#x27;registered&#x27;,&#x27;deposited&#x27;,&#x27;traded&#x27;,&#x27;repeat_traded&#x27;]].astype(int).values
+fig, ax = plt.subplots()
+ax.barh(steps[::-1], vals[::-1], color=&#x27;#2bb596&#x27;)
+for i, v in enumerate(vals[::-1]):
+    ax.text(v, i, f&#x27; {v}  ({v/vals[0]*100:.1f}%)&#x27;, va=&#x27;center&#x27;)
+ax.set_title(&#x27;AARRR Funnel&#x27;); plt.tight_layout(); plt.show()
+funnel</pre></div></div>
+<div class="cell"><p><strong>📌 解读</strong>:对比相邻两步的转化率,找出最大跌幅。例如若「入金→首笔交易」掉得最狠,说明新手引导/首单激励是抓手。_(把你的结论写在这)_</p></div>
+<div class="cell"><h2>3 · 留存 cohort:新用户留得住吗</h2>
+<p>留存曲线是产品健康度的核心指标。这里看注册后第 0–14 天仍有交易的用户比例。</p></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>ret = q(&#x27;&#x27;&#x27;
+WITH fd AS (SELECT user_id, DATE(reg_time) c FROM dim_user),
+     act AS (SELECT DISTINCT user_id, DATE(ts) a FROM fact_trade)
+SELECT DATEDIFF(act.a, fd.c) day_n, COUNT(DISTINCT fd.user_id) cnt
+FROM fd LEFT JOIN act ON act.user_id=fd.user_id
+WHERE DATEDIFF(act.a, fd.c) BETWEEN 0 AND 14
+GROUP BY day_n ORDER BY day_n&#x27;&#x27;&#x27;)
+base = q(&#x27;SELECT COUNT(*) n FROM dim_user&#x27;)[&#x27;n&#x27;][0]
+ret[&#x27;rate&#x27;] = 100 * ret[&#x27;cnt&#x27;] / base
+
+ax = ret.plot(x=&#x27;day_n&#x27;, y=&#x27;rate&#x27;, marker=&#x27;o&#x27;, legend=False, color=&#x27;#e8b341&#x27;)
+ax.set_title(&#x27;Retention Curve (Day 0-14)&#x27;); ax.set_xlabel(&#x27;Days since registration&#x27;); ax.set_ylabel(&#x27;% active&#x27;)
+plt.tight_layout(); plt.show()
+d7 = ret.loc[ret[&#x27;day_n&#x27;]==7, &#x27;rate&#x27;]
+print(f&quot;7 日留存 ≈ {d7.values[0]:.1f}%&quot; if len(d7) else &#x27;无 D7 数据&#x27;)</pre></div></div>
+<div class="cell"><p><strong>📌 解读</strong>:留存曲线通常前几天陡降后趋平,趋平后的水平线代表「核心留存用户」。7 日留存是行业常用北极星之一。_(注:造数里埋了约 20% 的流失用户,所以曲线会明显下滑,符合真实规律)_</p></div>
+<div class="cell"><h2>4 · RFM 用户分层:谁是高价值用户</h2>
+<ul>
+<li><strong>R</strong>ecency 最近一次交易间隔天数(越小越好)</li>
+<li><strong>F</strong>requency 交易次数</li>
+<li><strong>M</strong>onetary 贡献手续费</li>
+</ul>
+<p>用 <code>NTILE(5)</code> 各分 5 档打分,再组合成业务分层。</p></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>seg = q(&#x27;&#x27;&#x27;
+WITH rfm AS (
+    SELECT user_id, DATEDIFF(&#x27;2026-07-01&#x27;, MAX(DATE(ts))) recency,
+           COUNT(*) frequency, SUM(fee) monetary
+    FROM fact_trade GROUP BY user_id),
+scored AS (
+    SELECT user_id, monetary,
+           NTILE(5) OVER (ORDER BY recency DESC) r,
+           NTILE(5) OVER (ORDER BY frequency)    f,
+           NTILE(5) OVER (ORDER BY monetary)     m
+    FROM rfm),
+s AS (
+    SELECT CASE
+             WHEN r&gt;=4 AND f&gt;=4 AND m&gt;=4 THEN &#x27;核心鲸鱼&#x27;
+             WHEN r&gt;=4 AND f&lt;=2          THEN &#x27;新客/潜力&#x27;
+             WHEN r&lt;=2 AND m&gt;=4          THEN &#x27;高价值流失预警&#x27;
+             WHEN r&lt;=2                   THEN &#x27;一般流失&#x27;
+             ELSE &#x27;普通活跃&#x27; END segment, monetary
+    FROM scored)
+SELECT segment, COUNT(*) users, ROUND(SUM(monetary),2) fee_contrib,
+       ROUND(100*SUM(monetary)/SUM(SUM(monetary)) OVER (),1) fee_pct
+FROM s GROUP BY segment ORDER BY fee_contrib DESC&#x27;&#x27;&#x27;)
+seg</pre></div></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>fig, (a1, a2) = plt.subplots(1, 2, figsize=(11, 4))
+a1.bar(range(len(seg)), seg[&#x27;users&#x27;], color=&#x27;#8a8f9c&#x27;)
+a1.set_xticks(range(len(seg))); a1.set_xticklabels(seg[&#x27;segment&#x27;], rotation=20, ha=&#x27;right&#x27;)
+a1.set_title(&#x27;Users by Segment&#x27;)
+a2.bar(range(len(seg)), seg[&#x27;fee_pct&#x27;], color=&#x27;#e8b341&#x27;)
+a2.set_xticks(range(len(seg))); a2.set_xticklabels(seg[&#x27;segment&#x27;], rotation=20, ha=&#x27;right&#x27;)
+a2.set_title(&#x27;Fee Contribution % by Segment&#x27;)
+plt.tight_layout(); plt.show()</pre></div></div>
+<div class="cell"><p><strong>📌 解读(最关键的一张)</strong>:典型结论是「少数核心鲸鱼贡献了大部分手续费」——这正是二八法则。运营策略随之而来:</p>
+<ul>
+<li><strong>核心鲸鱼</strong> → VIP 专属服务 / 手续费返佣,重点维系;</li>
+<li><strong>高价值流失预警</strong> → 立即发召回券 / 客户经理触达;</li>
+<li><strong>新客/潜力</strong> → 新手任务引导上量。</li>
+</ul>
+<p>_(把你算出来的「核心鲸鱼占总用户 X%、却贡献 Y% 手续费」写进简历)_</p></div>
+<div class="cell"><h2>5 · 营收拆解:钱从哪来</h2>
+<p>手续费收入按币种和 VIP 等级拆开看。</p></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>by_asset = q(&#x27;&#x27;&#x27;
+SELECT a.symbol, a.category, COUNT(*) trades, ROUND(SUM(t.fee),2) fee,
+       ROUND(100*SUM(t.fee)/SUM(SUM(t.fee)) OVER (),1) fee_pct
+FROM fact_trade t JOIN dim_asset a ON a.asset_id=t.base_asset_id
+GROUP BY a.symbol, a.category ORDER BY fee DESC&#x27;&#x27;&#x27;)
+ax = by_asset.plot.bar(x=&#x27;symbol&#x27;, y=&#x27;fee&#x27;, legend=False, color=&#x27;#2bb596&#x27;)
+ax.set_title(&#x27;Fee Revenue by Asset&#x27;); plt.tight_layout(); plt.show()
+by_asset</pre></div></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>by_vip = q(&#x27;&#x27;&#x27;
+SELECT u.vip_level, COUNT(DISTINCT u.user_id) users, COUNT(t.trade_id) trades,
+       ROUND(SUM(t.amount),2) gmv, ROUND(SUM(t.fee),2) fee
+FROM dim_user u LEFT JOIN fact_trade t ON t.user_id=u.user_id
+GROUP BY u.vip_level ORDER BY u.vip_level&#x27;&#x27;&#x27;)
+by_vip</pre></div></div>
+<div class="cell"><p><strong>📌 解读</strong>:高 VIP 费率低,但若成交量足够大,净手续费仍可能可观——这解释了「为什么平台愿意给大户降费」。观察 fee 随 VIP 的分布,判断降费策略是否换来了足够的量。</p></div>
+<div class="cell"><h2>6 · 渠道 ROI:哪个渠道最划算</h2>
+<p>比较各注册渠道的转化率与人均手续费,指导市场预算分配。</p></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>chan = q(&#x27;&#x27;&#x27;
+SELECT u.reg_channel,
+       COUNT(DISTINCT u.user_id) users,
+       ROUND(100*COUNT(DISTINCT CASE WHEN t.trade_id IS NOT NULL THEN u.user_id END)
+             /COUNT(DISTINCT u.user_id),1) conv_rate,
+       ROUND(COALESCE(SUM(t.fee),0)/COUNT(DISTINCT u.user_id),2) fee_per_user
+FROM dim_user u LEFT JOIN fact_trade t ON t.user_id=u.user_id
+GROUP BY u.reg_channel ORDER BY fee_per_user DESC&#x27;&#x27;&#x27;)
+ax = chan.plot.bar(x=&#x27;reg_channel&#x27;, y=&#x27;fee_per_user&#x27;, legend=False, color=&#x27;#e8b341&#x27;)
+ax.set_title(&#x27;Fee per User by Channel&#x27;); plt.tight_layout(); plt.show()
+chan</pre></div></div>
+<div class="cell"><p><strong>📌 解读</strong>:人均手续费高的渠道更值得追加投放。若某付费渠道拉来的用户人均产出却低,说明该渠道用户质量差,预算应转移。</p></div>
+<div class="cell"><h2>7 · A/B 测试:新手礼包能提升 7 日留存吗</h2>
+<p><strong>这是数据分析师的核心技能:用统计检验判断策略是否真的有效,而不是拍脑袋。</strong></p>
+<blockquote>说明:真实项目里分组(group)来自埋点。这里为演示流程,用随机分流模拟,</blockquote>
+<blockquote>并给实验组注入一个小幅提升,走一遍完整的<strong>两比例 z 检验</strong>。</blockquote></div>
+<div class="cell"><div class="code"><div class="lbl">In [ ]</div><pre>users = q(&#x27;SELECT user_id FROM dim_user&#x27;)
+act = q(&#x27;&#x27;&#x27;
+WITH fd AS (SELECT user_id, DATE(reg_time) c FROM dim_user),
+     a AS (SELECT DISTINCT user_id, DATE(ts) d FROM fact_trade)
+SELECT fd.user_id,
+       MAX(CASE WHEN DATEDIFF(a.d,fd.c)=7 THEN 1 ELSE 0 END) d7
+FROM fd LEFT JOIN a ON a.user_id=fd.user_id GROUP BY fd.user_id&#x27;&#x27;&#x27;)
+df = users.merge(act, on=&#x27;user_id&#x27;, how=&#x27;left&#x27;).fillna({&#x27;d7&#x27;: 0})
+
+rng = np.random.default_rng(7)
+df[&#x27;group&#x27;] = rng.integers(0, 2, len(df))                 # 0=对照A 1=实验B
+flip = (df[&#x27;group&#x27;]==1) &amp; (df[&#x27;d7&#x27;]==0) &amp; (rng.random(len(df))&lt;0.05)
+df.loc[flip, &#x27;d7&#x27;] = 1                                     # 模拟礼包效果
+
+a, b = df[df.group==0][&#x27;d7&#x27;], df[df.group==1][&#x27;d7&#x27;]
+n1, n2, p1, p2 = len(a), len(b), a.mean(), b.mean()
+p_pool = (a.sum()+b.sum())/(n1+n2)
+se = np.sqrt(p_pool*(1-p_pool)*(1/n1+1/n2))
+z = (p2-p1)/se
+pval = 2*(1-stats.norm.cdf(abs(z)))
+
+print(f&#x27;对照 A: {p1*100:.2f}%  (n={n1})&#x27;)
+print(f&#x27;实验 B: {p2*100:.2f}%  (n={n2})&#x27;)
+print(f&#x27;提升 {(p2-p1)*100:+.2f}pp,  z={z:.2f},  p={pval:.4f}&#x27;)
+print(&#x27;结论: &#x27; + (&#x27;差异显著(p&lt;0.05),建议全量上线 ✔&#x27; if pval&lt;0.05 else &#x27;差异不显著,需加大样本或迭代方案 ✘&#x27;))
+
+fig, ax = plt.subplots(figsize=(5,4))
+ax.bar([&#x27;A 对照&#x27;,&#x27;B 实验&#x27;], [p1*100, p2*100], color=[&#x27;#8a8f9c&#x27;,&#x27;#2bb596&#x27;])
+ax.set_title(f&#x27;7-day Retention (p={pval:.3f})&#x27;); ax.set_ylabel(&#x27;%&#x27;)
+plt.tight_layout(); plt.show()</pre></div></div>
+<div class="cell"><p><strong>📌 解读</strong>:p 值 &lt; 0.05 才能说「差异不是偶然」。面试常追问:</p>
+<ul>
+<li>为什么用两比例 z 检验?(留存是二元指标,比较两组比例)</li>
+<li>p 值是什么意思?(假设两组无差异时,观测到当前差异的概率)</li>
+<li>还要看什么?(效应量/提升幅度是否有业务意义、样本量是否足够、有无 novelty effect)</li>
+</ul></div>
+<div class="cell"><h2>8 · 总结与运营建议</h2>
+<p>_(跑完把真实数字填进去,这段就是你面试时的&quot;项目故事&quot;)_</p>
+<table><thead><tr><th>问题</th><th>发现</th><th>建议</th></tr></thead><tbody>
+<tr><td>漏斗</td><td>____ 步转化最低</td><td>优化该环节</td></tr>
+<tr><td>留存</td><td>7 日留存 ___%</td><td>抓新手引导</td></tr>
+<tr><td>分层</td><td>核心鲸鱼 __% 用户贡献 __% 手续费</td><td>分层精细化运营</td></tr>
+<tr><td>渠道</td><td>____ 渠道人均产出最高</td><td>预算倾斜</td></tr>
+<tr><td>A/B</td><td>新手礼包提升 __pp(p=__)</td><td>显著则全量</td></tr>
+</tbody></table>
+<p><strong>一句话故事</strong>:我基于自建的交易平台数仓,通过漏斗+留存+RFM 定位到核心用户与关键流失环节,并用 A/B 测试验证了运营策略的有效性,为增长与营收决策提供了数据支撑。</p></div>
+<footer>由 CryptoLake · nb_to_html.py 生成 · <a href="index.html">← 返回路线图</a> · <a href="https://github.com/lizhi5753186/CryptoLake">GitHub 仓库</a></footer>
+</div></body></html>

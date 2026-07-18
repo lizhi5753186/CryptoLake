@@ -2,7 +2,7 @@
 
 > 一个数据分析师作品集项目:自建交易平台数据仓库(MySQL),扮演它的数据分析师,
 > 用 SQL / Python / 大数据 / BI / 机器学习 回答真实业务问题。
-> 配套 18 个月学习路线图见 [`roadmap.html`](roadmap.html)(浏览器打开,**每个阶段都配了结果产物效果图**,照着对照就知道目标长什么样),简历模板见 [`resume.html`](resume.html)。
+> 配套 18 个月学习路线图见 [`roadmap.html`](roadmap.html)(浏览器打开,**每个阶段都配了结果产物效果图**,照着对照就知道目标长什么样),简历模板见 [`resume.html`](resume.html),分析报告网页见 [`report.html`](report.html)(由 Notebook 转成,可挂 Pages)。
 
 ![stack](https://img.shields.io/badge/stack-MySQL·Python·Spark·dbt·Airflow·sklearn-e8b341)
 
@@ -28,8 +28,10 @@
 ```
 CryptoLake/
 ├── README.md                    ← 你在这
+├── index.html                   GitHub Pages 首页(跳转到路线图)
 ├── roadmap.html                 18 个月学习路线图(浏览器打开)
 ├── resume.html                  数据分析师简历模板(可导出 PDF)
+├── report.html                  分析报告网页(scripts/nb_to_html.py 从 Notebook 生成)
 ├── requirements.txt             Python 依赖
 ├── sql/
 │   ├── 01_schema.sql            建库 + 星型模型 8 张表
