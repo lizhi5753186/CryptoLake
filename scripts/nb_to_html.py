@@ -147,7 +147,19 @@ th,td{{border:1px solid var(--line);padding:7px 11px;text-align:left}}th{{backgr
 .outputs img{{max-width:100%;height:auto;border-radius:4px}}
 .outputs .err{{color:#cf4b47}}
 footer{{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}}
-</style></head><body><div class="wrap">
+.topnav{{position:sticky;top:0;z-index:9;display:flex;gap:3px;flex-wrap:wrap;align-items:center;padding:9px 24px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);font-family:var(--mono)}}
+.topnav .brand{{font-weight:700;color:var(--ink);margin-right:auto;font-size:12.5px;letter-spacing:.04em}}
+.topnav .brand b{{color:var(--accent)}}
+.topnav a{{font-size:11.5px;text-decoration:none;color:var(--soft);padding:4px 9px;border-radius:4px;border:1px solid transparent}}
+.topnav a:hover{{color:var(--ink);border-color:var(--line)}}
+.topnav a.active{{color:var(--accentink);background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}}
+</style></head><body>
+<nav class="topnav"><span class="brand">CRYPTO<b>LAKE</b></span>
+<a href="https://lizhi5753186.github.io/CryptoLake/roadmap.html">路线图</a>
+<a href="https://lizhi5753186.github.io/CryptoLake/report.html" class="active">分析报告</a>
+<a href="https://lizhi5753186.github.io/CryptoLake/resume.html">简历</a>
+<a href="https://github.com/lizhi5753186/CryptoLake">GitHub ↗</a></nav>
+<div class="wrap">
 <div class="banner">📊 <b>CryptoLake 分析报告</b> · 本页由 <code>scripts/nb_to_html.py</code> 从 Notebook 生成。{note}</div>
 {body}
 <footer>由 CryptoLake · nb_to_html.py 生成 · <a href="index.html">← 返回路线图</a> · <a href="https://github.com/lizhi5753186/CryptoLake">GitHub 仓库</a></footer>
