@@ -1,0 +1,14 @@
+# 复制到 ~/.dbt/profiles.yml 并改成你的连接信息
+# 需要 pip install dbt-mysql
+cryptolake:
+  target: dev
+  outputs:
+    dev:
+      type: mysql
+      server: 127.0.0.1
+      port: 3306
+      database: cryptolake      # dbt-mysql 用 schema 作为库名
+      schema: cryptolake
+      username: root
+      password: root
+      driver: MySQL ODBC 8.0 ANSI Driver

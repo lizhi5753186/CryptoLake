@@ -1,0 +1,528 @@
+<title>加密交易平台数据分析师 · 18个月路线图</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    /* palette — light "paper trading" ground */
+    --bg:        #f4f2ec;
+    --grid:      rgba(20,26,38,0.045);
+    --surface:   #fbfaf6;
+    --surface-2: #efece3;
+    --ink:       #1a1f29;
+    --ink-soft:  #4b5261;
+    --ink-faint: #8a8f9c;
+    --line:      #ded9cd;
+    --line-soft: #e8e4d9;
+    --accent:    #b6791b;   /* amber, desaturated from crypto-gold */
+    --accent-ink:#8a5a10;
+    --bull:      #1c8f79;   /* candlestick green */
+    --bear:      #cf4b47;   /* candlestick red  */
+    --bull-bg:   rgba(28,143,121,0.10);
+    --bear-bg:   rgba(207,75,71,0.10);
+    --accent-bg: rgba(182,121,27,0.10);
+
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
+    --sans: -apple-system, "SF Pro Text", "Segoe UI", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+
+    --maxw: 1080px;
+    --r: 6px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #0d1119;
+      --grid:      rgba(255,255,255,0.035);
+      --surface:   #141a26;
+      --surface-2: #1a2130;
+      --ink:       #e7e9ee;
+      --ink-soft:  #a3abbb;
+      --ink-faint: #6b7488;
+      --line:      #232c3d;
+      --line-soft: #1c2434;
+      --accent:    #e8b341;
+      --accent-ink:#f0c869;
+      --bull:      #2bb596;
+      --bear:      #ef5f5a;
+      --bull-bg:   rgba(43,181,150,0.12);
+      --bear-bg:   rgba(239,95,90,0.12);
+      --accent-bg: rgba(232,179,65,0.12);
+    }
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg:#f4f2ec; --grid:rgba(20,26,38,0.045); --surface:#fbfaf6; --surface-2:#efece3;
+    --ink:#1a1f29; --ink-soft:#4b5261; --ink-faint:#8a8f9c; --line:#ded9cd; --line-soft:#e8e4d9;
+    --accent:#b6791b; --accent-ink:#8a5a10; --bull:#1c8f79; --bear:#cf4b47;
+    --bull-bg:rgba(28,143,121,0.10); --bear-bg:rgba(207,75,71,0.10); --accent-bg:rgba(182,121,27,0.10);
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg:#0d1119; --grid:rgba(255,255,255,0.035); --surface:#141a26; --surface-2:#1a2130;
+    --ink:#e7e9ee; --ink-soft:#a3abbb; --ink-faint:#6b7488; --line:#232c3d; --line-soft:#1c2434;
+    --accent:#e8b341; --accent-ink:#f0c869; --bull:#2bb596; --bear:#ef5f5a;
+    --bull-bg:rgba(43,181,150,0.12); --bear-bg:rgba(239,95,90,0.12); --accent-bg:rgba(232,179,65,0.12);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 32px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 32px 100%,
+      var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.62;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent-ink); font-weight: 600;
+  }
+  h1,h2,h3 { text-wrap: balance; line-height: 1.15; letter-spacing: -0.015em; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 24px; border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    font-family: var(--mono); font-size: 12.5px;
+  }
+  .topbar .tick { color: var(--ink-faint); }
+  .topbar .up { color: var(--bull); }
+  .topbar .brand { font-weight: 700; letter-spacing: 0.04em; color: var(--ink); }
+  .topbar .brand b { color: var(--accent); }
+  .topbar .spacer { flex: 1; }
+  .theme-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    background: var(--surface-2); color: var(--ink-soft);
+    border: 1px solid var(--line); border-radius: 4px; padding: 4px 9px; cursor: pointer;
+  }
+  .theme-btn:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 64px 0 40px; }
+  .hero h1 { font-size: clamp(30px, 5.4vw, 52px); font-weight: 800; margin: 14px 0 0; }
+  .hero h1 .amber { color: var(--accent); }
+  .hero .lede { font-size: clamp(16px, 2.2vw, 19px); color: var(--ink-soft); max-width: 62ch; margin: 20px 0 0; }
+  #candles { display:block; width: 100%; height: 96px; margin-top: 34px; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+
+  .statrow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin-top: 34px; }
+  .stat { background: var(--surface); padding: 18px 20px; }
+  .stat .n { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stat .n small { font-size: 14px; color: var(--accent); font-weight: 600; }
+  .stat .l { font-size: 12.5px; color: var(--ink-faint); margin-top: 2px; }
+  @media (max-width: 640px){ .statrow{ grid-template-columns: repeat(2,1fr);} .hero{padding-top:40px;} }
+
+  /* ---------- section scaffold ---------- */
+  section { padding: 52px 0; border-top: 1px solid var(--line-soft); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+  .sec-head .idx { font-family: var(--mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+  h2 { font-size: clamp(22px, 3.4vw, 30px); font-weight: 750; margin: 6px 0 0; }
+  .sec-sub { color: var(--ink-soft); max-width: 68ch; margin: 14px 0 30px; }
+
+  /* ---------- generic cards ---------- */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px 24px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  @media (max-width: 760px){ .grid2,.grid3{ grid-template-columns: 1fr; } }
+  .card h3 { font-size: 16px; margin: 0 0 8px; }
+  .card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
+  .card ul { margin: 10px 0 0; padding-left: 18px; color: var(--ink-soft); font-size: 14.5px; }
+  .card li { margin: 4px 0; }
+
+  .tag { display:inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; padding: 2px 7px; border-radius: 4px; background: var(--accent-bg); color: var(--accent-ink); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+  .tag.g { background: var(--bull-bg); color: var(--bull); border-color: color-mix(in srgb, var(--bull) 34%, transparent); }
+  .tag.r { background: var(--bear-bg); color: var(--bear); border-color: color-mix(in srgb, var(--bear) 34%, transparent); }
+
+  /* ---------- phases (terminal watchlist rows) ---------- */
+  .phase { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 14px; overflow: hidden; }
+  .phase-hd { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--line-soft); background: var(--surface-2); flex-wrap: wrap; }
+  .phase-hd .code { font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--accent); letter-spacing: .06em; }
+  .phase-hd .mo { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); }
+  .phase-hd .ttl { font-weight: 700; font-size: 16.5px; }
+  .phase-hd .spacer { flex: 1; }
+  .phase-hd .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--bull); box-shadow: 0 0 0 3px var(--bull-bg); }
+  .phase-bd { padding: 6px 20px 20px; }
+  .prow { display: grid; grid-template-columns: 140px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px dashed var(--line-soft); }
+  .prow:last-child { border-bottom: 0; }
+  .prow .k { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); padding-top: 2px; }
+  .prow .v { color: var(--ink-soft); font-size: 14.5px; }
+  .prow .v strong { color: var(--ink); font-weight: 650; }
+  @media (max-width: 640px){ .prow{ grid-template-columns: 1fr; gap: 4px; } }
+
+  /* ---------- code ---------- */
+  .codewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-top: 6px; }
+  .codewrap .bar { display:flex; gap:8px; align-items:center; padding: 8px 14px; border-bottom: 1px solid var(--line-soft); font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); background: var(--surface-2); }
+  pre { margin: 0; padding: 16px 18px; font-family: var(--mono); font-size: 13px; line-height: 1.65; color: var(--ink); tab-size: 2; }
+  pre .c { color: var(--ink-faint); }
+  pre .kw { color: var(--accent-ink); font-weight: 600; }
+  pre .fn { color: var(--bull); }
+
+  /* ---------- schema table ---------- */
+  .tblwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 560px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line-soft); }
+  th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); background: var(--surface-2); font-weight: 600; }
+  td { color: var(--ink-soft); }
+  td.mono, th.mono { font-family: var(--mono); }
+  td strong { color: var(--ink); }
+  tr:last-child td { border-bottom: 0; }
+
+  /* ---------- resume bullets ---------- */
+  .bullet { border-left: 2px solid var(--accent); padding: 4px 0 4px 16px; margin: 0 0 18px; }
+  .bullet .txt { font-size: 15px; color: var(--ink); }
+  .bullet .why { font-size: 13px; color: var(--ink-faint); margin-top: 5px; }
+
+  .callout { background: var(--accent-bg); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); border-radius: var(--r); padding: 16px 20px; font-size: 14.5px; color: var(--ink-soft); }
+  .callout strong { color: var(--accent-ink); }
+
+  footer { padding: 46px 0 70px; border-top: 1px solid var(--line-soft); color: var(--ink-faint); font-size: 13.5px; }
+  a { color: var(--accent-ink); }
+  ::selection { background: var(--accent-bg); }
+</style>
+
+<div class="topbar">
+  <span class="brand">CRYPTO<b>LAKE</b></span>
+  <span class="tick">BTC/USDT <span class="up">▲</span></span>
+  <span class="tick">ROADMAP <span class="up">18M</span></span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeToggle" type="button">◐ 主题</button>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Data Analyst · Career Roadmap · 2026 → 2027</span>
+    <h1>用一个<span class="amber">币安式加密交易平台</span>项目,<br>练成一名数据分析师</h1>
+    <p class="lede">一条主线项目贯穿 18 个月:你自己搭一套交易平台的数据仓库(MySQL),扮演它的数据分析师,回答真实的业务问题。SQL、Python、大数据、BI、机器学习都不是孤立地学语法,而是为了解决"用户为什么流失""哪些资产在赚手续费"这样的问题——学完刚好就是一个能写进简历、经得起面试追问的作品集。</p>
+    <canvas id="candles" aria-hidden="true"></canvas>
+    <div class="statrow">
+      <div class="stat"><div class="n">18<small>个月</small></div><div class="l">从零到可投递校招/实习</div></div>
+      <div class="stat"><div class="n">6<small>阶段</small></div><div class="l">每阶段都有可交付成果</div></div>
+      <div class="stat"><div class="n">1<small>主线</small></div><div class="l">同一个项目越挖越深</div></div>
+      <div class="stat"><div class="n">5<small>栈</small></div><div class="l">SQL·Python·大数据·BI·ML</div></div>
+    </div>
+  </header>
+
+  <!-- 0 目标画像 -->
+  <section>
+    <div class="sec-head"><span class="idx">00</span><h2>先看清岗位到底要什么</h2></div>
+    <p class="sec-sub">别被 JD 里一长串技术名词吓到。把招聘要求翻译成"能力",你会发现优先级差别很大。下面是加密/互联网数据分析师岗位的真实权重——你的时间要按这个比例分配,而不是平均用力。</p>
+    <div class="grid3">
+      <div class="card">
+        <h3>🥇 SQL + 业务解读 <span class="tag g">最高权重</span></h3>
+        <p>面试 80% 的现场题是 SQL。但真正拉开差距的是:你能不能把一个业务问题(留存下降)翻译成一句查询,再把查询结果翻译回业务结论。这是本路线的核心。</p>
+      </div>
+      <div class="card">
+        <h3>🥈 Python + 统计 <span class="tag">高</span></h3>
+        <p>pandas 做清洗与分析、matplotlib 画图、基础统计与 A/B 测试。不用会算法工程,但要能独立跑通一个分析、说清置信度。</p>
+      </div>
+      <div class="card">
+        <h3>🥉 大数据 + BI <span class="tag">加分</span></h3>
+        <p>Hive/Spark SQL、数仓分层、调度、以及一个能给业务看的看板(Superset/Tableau/PowerBI/FineBI)。校招阶段是明显的差异化亮点。</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px;">
+      <strong>一句话心法:</strong> 招聘方不缺"会写 SQL 的人",缺"能用数据把业务问题说清楚的人"。所以这套规划里,<strong>每写一段代码都要求你补一句"这说明了什么业务结论"</strong>——这也是你面试时最能打的东西。
+    </div>
+  </section>
+
+  <!-- 1 主线项目 -->
+  <section>
+    <div class="sec-head"><span class="idx">01</span><h2>主线项目:CryptoLake 交易平台数据仓库</h2></div>
+    <p class="sec-sub">加密交易平台的商业模式很干净:<strong>平台靠交易手续费赚钱</strong>。于是数据分析师的所有问题都围绕一件事——怎么让更多的人、更频繁地、交易更多的量。你要扮演这个分析师,自己造出一套贴近真实的数据,然后回答这些问题。</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>业务场景(你的"甲方")</h3>
+        <ul>
+          <li>运营问:<strong>新用户第 7 天还回来吗?</strong>(留存)</li>
+          <li>市场问:<strong>哪个渠道来的用户最能贡献手续费?</strong>(渠道 ROI)</li>
+          <li>产品问:<strong>大户(鲸鱼)和散户行为差在哪?</strong>(分层)</li>
+          <li>财务问:<strong>手续费收入靠哪些币种/用户支撑?</strong>(营收拆解)</li>
+          <li>风控问:<strong>哪些账户交易行为异常?</strong>(异常检测)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>没有真实数据?自己造 —— 这本身就是能力</h3>
+        <p>用 Python(<span class="mono">Faker</span> + <span class="mono">numpy</span>)按真实分布造数,比随机数高级得多,面试官会追问:</p>
+        <ul>
+          <li>交易频次用<strong>泊松分布</strong>,少数鲸鱼贡献大部分量用<strong>幂律分布</strong></li>
+          <li>价格用<strong>随机游走</strong>生成 K 线,避免"假得离谱"</li>
+          <li>故意埋入<strong>流失用户、异常账户</strong>,让后面的分析有东西可挖</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin:30px 0 12px;font-size:16px;">数据模型(MySQL 维度建模)</h3>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th class="mono">表名</th><th>类型</th><th>说明 / 关键字段</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><strong>dim_user</strong></td><td>维度</td><td>用户:注册时间、国家、KYC等级、注册渠道、referrer_id、VIP等级</td></tr>
+          <tr><td class="mono"><strong>dim_asset</strong></td><td>维度</td><td>币种:BTC/ETH/USDT…、类别(主流/山寨/稳定币)</td></tr>
+          <tr><td class="mono"><strong>dim_date</strong></td><td>维度</td><td>日期表:年/月/周/是否周末,做时间分析必备</td></tr>
+          <tr><td class="mono"><strong>fact_trade</strong></td><td>事实</td><td>成交明细:user_id、symbol、side、price、qty、<strong>fee(手续费)</strong>、ts</td></tr>
+          <tr><td class="mono"><strong>fact_order</strong></td><td>事实</td><td>挂单:含未成交/撤单,用于挂单成交率分析</td></tr>
+          <tr><td class="mono"><strong>fact_deposit_withdraw</strong></td><td>事实</td><td>充值/提现:资金流入流出、净入金</td></tr>
+          <tr><td class="mono"><strong>fact_login</strong></td><td>事实</td><td>登录/活跃日志:算 DAU/MAU、活跃度</td></tr>
+          <tr><td class="mono"><strong>fact_kline</strong></td><td>事实</td><td>K线 OHLCV:行情数据,做量价关联</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--ink-faint);font-size:13px;margin-top:10px;">✳️ 一句话讲清架构:1 张手续费事实表(fact_trade)是钱的来源,其它表都围绕它。面试时你能画出这张星型模型,就已经赢过一大半候选人。</p>
+  </section>
+
+  <!-- 2 阶段路线 -->
+  <section>
+    <div class="sec-head"><span class="idx">02</span><h2>18 个月 · 六个阶段</h2></div>
+    <p class="sec-sub">按大三学生的现实节奏设计:平时每周 8–12 小时,寒暑假冲刺。每个阶段结束都有一个能拿出手的交付物——不是"学完了",而是"做出来了"。</p>
+
+    <div class="phase">
+      <div class="phase-hd"><span class="code">P1</span><span class="mo">M01–M03</span><span class="ttl">SQL 与数据建模地基</span><span class="spacer"></span><span class="tag g">交付:数仓 + 50 条业务查询</span></div>
+      <div class="phase-bd">
+        <div class="prow"><div class="k">学什么</div><div class="v">MySQL 安装配置;<strong>SELECT / JOIN / GROUP BY / 子查询</strong>;进阶 <strong>窗口函数、CTE、条件聚合</strong>(这三样是分析岗 SQL 的分水岭)</div></div>
+        <div class="prow"><div class="k">项目里做</div><div class="v">建好 8 张表的星型模型,用 Python 造 10 万级数据,写 50+ 基础业务查询(日活、成交额、Top 币种)</div></div>
+        <div class="prow"><div class="k">交付物</div><div class="v"><strong>建表脚本 + 造数脚本 + 一份 SQL 查询集</strong>,全部上传 GitHub</div></div>
+        <div class="prow"><div class="k">资源</div><div class="v">《SQL必知必会》· LeetCode Database · 牛客 SQL 篇</div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-hd"><span class="code">P2</span><span class="mo">M04–M06</span><span class="ttl">核心业务分析(SQL 深水区)</span><span class="spacer"></span><span class="tag g">交付:一份完整分析报告</span></div>
+      <div class="phase-bd">
+        <div class="prow"><div class="k">学什么</div><div class="v"><strong>AARRR 漏斗、留存 cohort、RFM 用户分层、GMV/手续费拆解、VIP 分层</strong>——全部用纯 SQL 实现</div></div>
+        <div class="prow"><div class="k">项目里做</div><div class="v">回答第 01 节里那 5 个业务问题;每个结论配一段 SQL + 一句业务解读</div></div>
+        <div class="prow"><div class="k">交付物</div><div class="v"><strong>《CryptoLake 用户与营收分析报告 v1》</strong>(Markdown/PDF),这是简历项目的雏形</div></div>
+        <div class="prow"><div class="k">资源</div><div class="v">《精益数据分析》· 增长黑客 AARRR 模型 · 各大厂数据分析案例</div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-hd"><span class="code">P3</span><span class="mo">M07–M09</span><span class="ttl">Python 数据分析与统计</span><span class="spacer"></span><span class="tag g">交付:Jupyter 分析笔记本</span></div>
+      <div class="phase-bd">
+        <div class="prow"><div class="k">学什么</div><div class="v"><strong>pandas / numpy</strong> 连 MySQL 做清洗聚合;<strong>matplotlib / seaborn</strong> 可视化;<strong>描述统计、假设检验、A/B 测试</strong>基础</div></div>
+        <div class="prow"><div class="k">项目里做</div><div class="v">用 Python 复现并深化 P2 的分析;做一个 A/B 测试模拟(如"新手礼包是否提升 7 日留存",算 p 值与置信区间)</div></div>
+        <div class="prow"><div class="k">交付物</div><div class="v"><strong>一套 Jupyter Notebook</strong>,图文并茂,能直接演示给面试官</div></div>
+        <div class="prow"><div class="k">资源</div><div class="v">《利用Python进行数据分析》(pandas作者著)· Kaggle Learn · StatQuest(统计入门神器)</div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-hd"><span class="code">P4</span><span class="mo">M10–M12</span><span class="ttl">大数据与工程化</span><span class="spacer"></span><span class="tag">交付:端到端数据管道</span></div>
+      <div class="phase-bd">
+        <div class="prow"><div class="k">学什么</div><div class="v"><strong>Hive / Spark SQL</strong> 概念与语法;<strong>数仓分层(ODS→DWD→DWS→ADS)</strong>;<strong>dbt</strong> 做转换;<strong>Airflow</strong> 做调度</div></div>
+        <div class="prow"><div class="k">项目里做</div><div class="v">把数据量放大到千万级;用分层思想重构模型;搭一条"造数→清洗→聚合→出报表"的自动化管道</div></div>
+        <div class="prow"><div class="k">交付物</div><div class="v"><strong>一条可运行的数据管道 + 数仓分层文档</strong>,这是拉开与普通候选人差距的关键</div></div>
+        <div class="prow"><div class="k">资源</div><div class="v">《大数据之路:阿里巴巴大数据实践》· dbt 官方教程 · Spark 官方文档(用 Context7 拉最新版)</div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-hd"><span class="code">P5</span><span class="mo">M13–M15</span><span class="ttl">BI 看板与机器学习入门</span><span class="spacer"></span><span class="tag">交付:运营看板 + 预测模型</span></div>
+      <div class="phase-bd">
+        <div class="prow"><div class="k">学什么</div><div class="v"><strong>Superset / Tableau / PowerBI / FineBI</strong> 任选做交互看板;<strong>scikit-learn</strong> 做流失预测、用户 LTV、异常交易检测(逻辑回归/决策树,够用)</div></div>
+        <div class="prow"><div class="k">项目里做</div><div class="v">给"运营团队"做一个交易平台监控看板;训练一个流失预测模型,评估 AUC 并解释哪些特征重要</div></div>
+        <div class="prow"><div class="k">交付物</div><div class="v"><strong>一个可交互看板截图/录屏 + 一个建模 Notebook</strong></div></div>
+        <div class="prow"><div class="k">资源</div><div class="v">Tableau Public 免费版 · Apache Superset 官方 · sklearn 官方教程</div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-hd"><span class="code">P6</span><span class="mo">M16–M18</span><span class="ttl">作品集打磨与求职冲刺</span><span class="spacer"></span><span class="tag r">交付:投递 + 面试</span></div>
+      <div class="phase-bd">
+        <div class="prow"><div class="k">学什么</div><div class="v">GitHub 作品集整理;README 与项目文档;<strong>简历 STAR 化</strong>;高频 SQL 面试题;业务指标 case 面;模拟面试</div></div>
+        <div class="prow"><div class="k">项目里做</div><div class="v">把整个 CryptoLake 项目做成一个漂亮的 GitHub 仓库 + 一页项目主页(就像这份文档)</div></div>
+        <div class="prow"><div class="k">交付物</div><div class="v"><strong>1 份简历 + 1 个作品集仓库 + 投递清单</strong>;开始投实习/校招</div></div>
+        <div class="prow"><div class="k">资源</div><div class="v">牛客网面经 · 各厂数据分析真题 · 找学长学姐/在职者内推与模拟面</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 代码样例 -->
+  <section>
+    <div class="sec-head"><span class="idx">03</span><h2>两段"能上简历"的核心 SQL</h2></div>
+    <p class="sec-sub">下面是 P2 阶段你会亲手写出来的东西。它们同时也是 SQL 面试的高频考点(留存 cohort、RFM)。看不懂没关系,这正是你 3 个月后要能默写的水平。</p>
+
+    <div class="codewrap">
+      <div class="bar">📈 次日/7日留存 · 用窗口函数算 cohort</div>
+      <pre><span class="c">-- 每个注册日的用户,在第 N 天是否回来交易</span>
+<span class="kw">WITH</span> first_day <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> u.user_id, <span class="fn">DATE</span>(u.reg_time) <span class="kw">AS</span> cohort_day
+  <span class="kw">FROM</span> dim_user u
+),
+activity <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> <span class="kw">DISTINCT</span> user_id, <span class="fn">DATE</span>(ts) <span class="kw">AS</span> act_day
+  <span class="kw">FROM</span> fact_trade
+)
+<span class="kw">SELECT</span>
+  f.cohort_day,
+  <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> f.user_id)                          <span class="kw">AS</span> cohort_size,
+  <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="kw">CASE WHEN</span> <span class="fn">DATEDIFF</span>(a.act_day,f.cohort_day)=1
+        <span class="kw">THEN</span> f.user_id <span class="kw">END</span>)                          <span class="kw">AS</span> d1_retained,
+  <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="kw">CASE WHEN</span> <span class="fn">DATEDIFF</span>(a.act_day,f.cohort_day)=7
+        <span class="kw">THEN</span> f.user_id <span class="kw">END</span>)                          <span class="kw">AS</span> d7_retained
+<span class="kw">FROM</span> first_day f
+<span class="kw">LEFT JOIN</span> activity a <span class="kw">ON</span> a.user_id = f.user_id
+<span class="kw">GROUP BY</span> f.cohort_day
+<span class="kw">ORDER BY</span> f.cohort_day;</pre>
+    </div>
+
+    <div class="codewrap" style="margin-top:18px;">
+      <div class="bar">💰 RFM 用户分层 · 找出高价值用户</div>
+      <pre><span class="c">-- R=最近一次交易, F=交易次数, M=贡献手续费; 各分 5 档打分</span>
+<span class="kw">WITH</span> rfm <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> user_id,
+    <span class="fn">DATEDIFF</span>(<span class="fn">CURDATE</span>(), <span class="fn">MAX</span>(<span class="fn">DATE</span>(ts))) <span class="kw">AS</span> recency,
+    <span class="fn">COUNT</span>(*)                              <span class="kw">AS</span> frequency,
+    <span class="fn">SUM</span>(fee)                              <span class="kw">AS</span> monetary
+  <span class="kw">FROM</span> fact_trade
+  <span class="kw">GROUP BY</span> user_id
+)
+<span class="kw">SELECT</span> user_id, recency, frequency, monetary,
+  <span class="fn">NTILE</span>(5) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> recency <span class="kw">DESC</span>)  <span class="kw">AS</span> r_score,
+  <span class="fn">NTILE</span>(5) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> frequency)      <span class="kw">AS</span> f_score,
+  <span class="fn">NTILE</span>(5) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> monetary)       <span class="kw">AS</span> m_score
+<span class="kw">FROM</span> rfm;
+<span class="c">-- 之后:R低F高M高 = 忠实鲸鱼;R高F低 = 流失预警,该发召回券</span></pre>
+    </div>
+  </section>
+
+  <!-- 4 简历 -->
+  <section>
+    <div class="sec-head"><span class="idx">04</span><h2>这个项目怎么写进简历</h2></div>
+    <p class="sec-sub">照抄下面的模板,把 <span class="mono">[占位]</span> 换成你真实做出来的数字。要点:<strong>用动词开头、带量化结果、体现业务价值</strong>——而不是罗列"用了什么工具"。</p>
+
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--accent-ink);letter-spacing:.08em;margin-bottom:14px;">PROJECT · CryptoLake 加密交易平台用户与营收分析</div>
+      <div class="bullet">
+        <div class="txt">独立设计并搭建加密交易平台数据仓库(MySQL 星型模型,8 张表),用 Python 模拟 <span class="mono">[千万]</span> 级交易数据,覆盖用户、成交、充提、行情全链路。</div>
+        <div class="why">↳ 展示:数据建模 + Python 造数 + 工程能力</div>
+      </div>
+      <div class="bullet">
+        <div class="txt">运用窗口函数、CTE 完成 AARRR 漏斗、留存 cohort 与 RFM 分层分析,定位出贡献 <span class="mono">[80%]</span> 手续费的高价值用户群,并给出分层运营建议。</div>
+        <div class="why">↳ 展示:高阶 SQL + 业务解读(最重要的一条)</div>
+      </div>
+      <div class="bullet">
+        <div class="txt">用 pandas 复现分析并设计 A/B 测试评估"新手礼包"策略,通过假设检验验证其对 7 日留存的提升具备统计显著性(p &lt; <span class="mono">[0.05]</span>)。</div>
+        <div class="why">↳ 展示:Python + 统计 + A/B 测试</div>
+      </div>
+      <div class="bullet">
+        <div class="txt">基于 dbt 构建 ODS→DWD→DWS→ADS 分层数仓并用 Airflow 调度,搭建 Superset 运营监控看板,训练流失预测模型(AUC <span class="mono">[0.8x]</span>)。</div>
+        <div class="why">↳ 展示:大数据工程 + BI + 机器学习(差异化亮点)</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:16px;">
+      <strong>诚信红线:</strong> 简历里写的每一条,面试都可能被追问到底。这个项目的价值恰恰在于——它是你真做的,所以你能答上"为什么这么建模""这个数字怎么算的"。<strong>千万别写你没亲手做过的东西</strong>,那会在追问中当场崩塌,得不偿失。
+    </div>
+  </section>
+
+  <!-- 5 节奏与避坑 -->
+  <section>
+    <div class="sec-head"><span class="idx">05</span><h2>节奏、心态与避坑</h2></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>🗓️ 现实节奏(别高估自己)</h3>
+        <ul>
+          <li>平时:<strong>每周 8–12 小时</strong>,固定时段,别靠爆发</li>
+          <li>寒暑假:每个阶段的<strong>冲刺窗口</strong>,啃硬骨头(大数据/建模)</li>
+          <li>每周留 1 小时写"<strong>本周学到 + 遇到的坑</strong>",这就是未来的面经素材</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>😮‍💨 觉得枯燥时</h3>
+        <ul>
+          <li>永远从<strong>业务问题</strong>出发,不要从语法出发——"我要知道鲸鱼是谁"比"我要学窗口函数"有动力得多</li>
+          <li>每完成一个分析就<strong>发一条动态 / 更新 GitHub</strong>,正反馈驱动</li>
+          <li>把数据可视化出来,<strong>看到图表比看代码爽</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚠️ 最常见的三个坑</h3>
+        <ul>
+          <li>只刷 SQL 语法,<strong>不做业务解读</strong> → 面试一问"这说明什么"就哑火</li>
+          <li>只顾做,<strong>不写文档/README</strong> → 作品集别人看不懂,等于没做</li>
+          <li>盲目追大数据/ML,<strong>SQL 和统计根基不牢</strong> → 本末倒置</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>✅ 每阶段自检</h3>
+        <ul>
+          <li>我能<strong>对着白板讲清</strong>这阶段做的东西吗?</li>
+          <li>它<strong>解决了什么业务问题</strong>?结论是什么?</li>
+          <li>代码<strong>上 GitHub 了吗</strong>?README 写了吗?</li>
+          <li>能不能<strong>用一句话</strong>让非技术的人听懂?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p style="margin:0 0 8px;color:var(--ink-soft);">这是一份可裁剪的模板 · 按你的课程压力和进度调整节奏,重要的是<strong style="color:var(--ink);">主线项目从头做到尾、每一步都留下可交付成果</strong>。</p>
+    <p style="margin:0;">CryptoLake Roadmap · 为「大数据管理专业 · 目标数据分析师」定制 · 2026</p>
+  </footer>
+</div>
+
+<script>
+  // theme toggle
+  (function () {
+    var btn = document.getElementById('themeToggle');
+    var root = document.documentElement;
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme');
+      if (!cur) {
+        cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+      drawCandles();
+    });
+  })();
+
+  // deterministic candlestick banner (no Math.random — seeded)
+  function drawCandles() {
+    var cv = document.getElementById('candles');
+    if (!cv) return;
+    var dpr = window.devicePixelRatio || 1;
+    var w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    var ctx = cv.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, w, h);
+    var css = getComputedStyle(document.documentElement);
+    var bull = css.getPropertyValue('--bull').trim();
+    var bear = css.getPropertyValue('--bear').trim();
+    var line = css.getPropertyValue('--line-soft').trim();
+
+    var n = Math.max(24, Math.floor(w / 26));
+    var step = w / n;
+    var cw = Math.min(11, step * 0.5);
+    // seeded pseudo-random (LCG) — deterministic, resume-safe
+    var seed = 1337, price = h * 0.5, amp = h * 0.16;
+    function rnd() { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; }
+    for (var i = 0; i < n; i++) {
+      var x = i * step + step / 2;
+      var drift = (rnd() - 0.48) * amp;
+      var open = price;
+      var close = Math.max(h * 0.18, Math.min(h * 0.82, price + drift));
+      var up = close <= open; // canvas y inverted: smaller y = higher price
+      var high = Math.min(open, close) - rnd() * amp * 0.5;
+      var low = Math.max(open, close) + rnd() * amp * 0.5;
+      ctx.strokeStyle = up ? bull : bear;
+      ctx.fillStyle = up ? bull : bear;
+      ctx.globalAlpha = 0.9;
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, high); ctx.lineTo(x, low); ctx.stroke();
+      var top = Math.min(open, close), bh = Math.max(2, Math.abs(close - open));
+      ctx.fillRect(x - cw / 2, top, cw, bh);
+      price = close;
+    }
+    ctx.globalAlpha = 1;
+  }
+  drawCandles();
+  window.addEventListener('resize', drawCandles);
+</script>

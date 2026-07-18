@@ -1,0 +1,25 @@
+# CryptoLake dbt 项目 —— 数仓分层建模
+# 分层: ODS(贴源) -> DWD(明细清洗) -> DWS(轻度汇总) -> ADS(应用/报表)
+name: 'cryptolake'
+version: '1.0.0'
+config-version: 2
+profile: 'cryptolake'
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  cryptolake:
+    ods:
+      +materialized: view       # 贴源层用视图, 不落地
+      +schema: ods
+    dwd:
+      +materialized: table       # 明细层落表
+      +schema: dwd
+    dws:
+      +materialized: table
+      +schema: dws
+    ads:
+      +materialized: table       # 应用层给 BI/报表直接用
+      +schema: ads

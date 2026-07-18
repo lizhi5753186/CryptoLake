@@ -1,0 +1,30 @@
+version: 2
+
+# dbt 数据质量测试 —— 面试亮点: "我给数仓加了自动化数据校验"
+models:
+  - name: dwd_trade_detail
+    description: "成交明细宽表(清洗 + 维度退化)"
+    columns:
+      - name: trade_id
+        tests: [unique, not_null]
+      - name: user_id
+        tests: [not_null]
+      - name: amount
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: false
+  - name: ads_user_rfm
+    description: "用户 RFM 分层"
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+      - name: segment
+        tests:
+          - accepted_values:
+              values: ['核心鲸鱼','新客/潜力','高价值流失预警','一般流失','普通活跃']
+  - name: ads_revenue_daily
+    description: "每日营收大盘"
+    columns:
+      - name: trade_date
+        tests: [unique, not_null]

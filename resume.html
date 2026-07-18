@@ -1,0 +1,140 @@
+<!-- CryptoLake 配套 · 数据分析师简历模板
+     用法: 浏览器打开 -> 把 [方括号] 占位符换成你的真实信息 -> Cmd+P 导出 PDF
+     ⚠️ 公开仓库里请勿填真实手机号/身份证等隐私,导出 PDF 后本地保存即可 -->
+<title>简历 · 数据分析师</title>
+<style>
+  :root{
+    --ink:#1c2230; --soft:#4d5566; --faint:#8a90a0; --line:#e2ddd1;
+    --accent:#b6791b; --accent-soft:#f3ead6; --bg:#ffffff;
+    --sans:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#ecebe6;color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:14px;-webkit-font-smoothing:antialiased;}
+  .page{max-width:820px;margin:24px auto;background:var(--bg);padding:44px 52px;box-shadow:0 2px 24px rgba(0,0,0,.08);}
+  .toolbar{max-width:820px;margin:14px auto 0;display:flex;gap:10px;justify-content:flex-end;}
+  .btn{font-family:var(--mono);font-size:12px;border:1px solid var(--line);background:#fff;color:var(--soft);padding:6px 12px;border-radius:5px;cursor:pointer;}
+  .btn:hover{border-color:var(--accent);color:var(--accent);}
+
+  h1{font-size:28px;margin:0;letter-spacing:.02em;}
+  .role{font-family:var(--mono);color:var(--accent);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:5px;}
+  .contact{margin-top:10px;color:var(--soft);font-size:12.5px;display:flex;flex-wrap:wrap;gap:6px 16px;}
+  .contact span::before{content:"·";color:var(--faint);margin-right:6px;}
+  .contact span:first-child::before{content:"";margin:0;}
+
+  h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+     border-bottom:2px solid var(--accent);padding-bottom:5px;margin:26px 0 12px;font-family:var(--mono);}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+  .row .t{font-weight:700;font-size:14.5px;}
+  .row .d{font-family:var(--mono);color:var(--faint);font-size:12px;white-space:nowrap;}
+  .sub{color:var(--soft);font-size:13px;margin:1px 0 6px;}
+  ul{margin:6px 0 0;padding-left:18px;}
+  li{margin:4px 0;color:var(--soft);}
+  li b{color:var(--ink);}
+  .ph{background:var(--accent-soft);color:var(--accent);padding:0 3px;border-radius:3px;font-family:var(--mono);font-size:12px;}
+  .skills{display:grid;grid-template-columns:110px 1fr;gap:6px 14px;font-size:13px;}
+  .skills .k{color:var(--ink);font-weight:600;}
+  .skills .v{color:var(--soft);}
+  .block{margin-bottom:16px;}
+  .tag{display:inline-block;font-family:var(--mono);font-size:11px;background:var(--accent-soft);color:var(--accent);padding:1px 6px;border-radius:3px;margin-left:6px;}
+
+  @media print{
+    body{background:#fff;font-size:12px;}
+    .toolbar{display:none;}
+    .page{box-shadow:none;margin:0;max-width:none;padding:24px 30px;}
+    h2{margin:16px 0 8px;}
+    @page{margin:12mm;}
+  }
+</style>
+
+<div class="toolbar">
+  <button class="btn" onclick="window.print()">⌘P 导出 PDF</button>
+</div>
+
+<div class="page">
+
+  <header>
+    <h1><span class="ph">[姓名]</span></h1>
+    <div class="role">数据分析师 · Data Analyst</div>
+    <div class="contact">
+      <span><span class="ph">[电话]</span></span>
+      <span><span class="ph">[邮箱]</span></span>
+      <span>GitHub: github.com/lizhi5753186/<span class="ph">[仓库]</span></span>
+      <span><span class="ph">[城市]</span> · 应届/实习</span>
+    </div>
+  </header>
+
+  <h2>教育背景</h2>
+  <div class="block">
+    <div class="row">
+      <span class="t"><span class="ph">[学校名称]</span> · 大数据管理与应用</span>
+      <span class="d"><span class="ph">[2023.09] – [2027.06]</span></span>
+    </div>
+    <div class="sub">本科 · <span class="ph">[GPA / 排名,如 3.7/4.0 或 专业前 10%]</span></div>
+    <ul>
+      <li>核心课程:数据库原理、数据结构、统计学、数据仓库、Python 程序设计、机器学习导论、大数据技术</li>
+      <li><span class="ph">[如有:奖学金 / 竞赛获奖 / 相关证书,如 CDA 数据分析师、阿里云 ACA 等]</span></li>
+    </ul>
+  </div>
+
+  <h2>专业技能</h2>
+  <div class="block skills">
+    <div class="k">SQL</div>
+    <div class="v">熟练 —— 复杂多表 JOIN、<b>窗口函数、CTE</b>、条件聚合;能独立完成漏斗、留存、RFM 等业务分析</div>
+    <div class="k">Python</div>
+    <div class="v">pandas / numpy 数据清洗与分析,matplotlib / seaborn 可视化,scikit-learn 基础建模</div>
+    <div class="k">统计 & 实验</div>
+    <div class="v">描述统计、假设检验、<b>A/B 测试</b>(两比例 z 检验、p 值解读)</div>
+    <div class="k">数据仓库</div>
+    <div class="v">维度建模(星型模型)、<b>ODS→DWD→DWS→ADS 分层</b>、dbt、数据质量测试</div>
+    <div class="k">大数据</div>
+    <div class="v">Hive / Spark SQL、Airflow 调度(了解 Hadoop / HDFS 原理)</div>
+    <div class="k">BI 工具</div>
+    <div class="v">Superset / Tableau / <span class="ph">[FineBI]</span>,搭建运营监控看板;Excel 数据透视</div>
+  </div>
+
+  <h2>项目经历</h2>
+  <div class="block">
+    <div class="row">
+      <span class="t">CryptoLake · 加密交易平台用户与营收分析<span class="tag">个人项目</span></span>
+      <span class="d"><span class="ph">[2026.xx – 2026.xx]</span></span>
+    </div>
+    <div class="sub">角色:数据分析师(独立完成) · 技术:MySQL · Python · dbt · Spark · Airflow · scikit-learn</div>
+    <ul>
+      <li>独立设计并搭建交易平台数据仓库(MySQL <b>星型模型 8 张表</b>),用 Python 按真实分布(泊松/幂律/随机游走)模拟 <span class="ph">[千万]</span> 级交易、充提、行情数据。</li>
+      <li>运用<b>窗口函数、CTE</b> 完成 AARRR 漏斗、留存 cohort、<b>RFM 用户分层</b>,定位出仅占 <span class="ph">[X%]</span> 却贡献 <span class="ph">[80%]</span> 手续费的核心用户群,并给出分层运营建议。</li>
+      <li>用 pandas 复现并深化分析,设计 <b>A/B 测试</b>评估"新手礼包"策略,通过假设检验验证其对 7 日留存提升 <span class="ph">[+X pp]</span> 具统计显著性(p<span class="ph">[<0.05]</span>)。</li>
+      <li>基于 dbt 构建 <b>ODS→DWD→DWS→ADS 分层数仓</b>并加数据质量测试,用 Airflow 编排每日管道;搭建 Superset 运营看板,训练<b>流失预测模型</b>(随机森林,AUC <span class="ph">[0.8x]</span>)。</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="row">
+      <span class="t"><span class="ph">[如有:第二个项目 / 课程设计 / 竞赛项目]</span></span>
+      <span class="d"><span class="ph">[时间]</span></span>
+    </div>
+    <div class="sub"><span class="ph">[一句话说明项目背景与你的角色]</span></div>
+    <ul>
+      <li><span class="ph">[做了什么 + 用了什么技术 + 量化结果]</span></li>
+    </ul>
+  </div>
+
+  <h2>实习经历 <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--faint);font-size:11px;">(有则写,无可删)</span></h2>
+  <div class="block">
+    <div class="row">
+      <span class="t"><span class="ph">[公司]</span> · <span class="ph">[数据分析实习生]</span></span>
+      <span class="d"><span class="ph">[时间]</span></span>
+    </div>
+    <ul>
+      <li><span class="ph">[用 STAR:背景-任务-行动-结果,尽量量化,如"通过 SQL 分析 XX,推动 XX 指标提升 X%"]</span></li>
+    </ul>
+  </div>
+
+  <h2>自我评价</h2>
+  <ul>
+    <li>大数据管理专业,系统学习数据分析全链路,具备<b>从建模、取数到业务解读</b>的完整能力。</li>
+    <li>习惯从业务问题出发用数据找答案,能把分析结论讲给非技术同事听。</li>
+    <li>作品集已开源(见上方 GitHub),代码、文档、可复现的分析报告齐全。</li>
+  </ul>
+
+</div>
